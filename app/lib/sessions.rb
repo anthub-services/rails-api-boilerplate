@@ -20,7 +20,6 @@ module Sessions
     def auth_bearer headers
       token = http_bearer_token headers
       return token if verify_token http_bearer_token(headers)
-      nil
     end
 
     def sign_out request
@@ -89,7 +88,6 @@ module Sessions
 
       def http_bearer_token headers
         return headers['Authorization'].split(' ').last if headers['Authorization'].present?
-        nil
       end
   end
 end

@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   post 'sign-out', to: 'sessions#sign_out', as: 'sessions_sign_out'
   get 'verify-token', to: 'sessions#verify_token', as: 'sessions_verify_token'
 
+  resources :users
+
   root :to => 'index#index'
 end

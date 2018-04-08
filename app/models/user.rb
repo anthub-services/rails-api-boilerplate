@@ -11,4 +11,6 @@ class User < ApplicationRecord
   has_one  :path
   has_many :sessions
 
+  validates :email, presence: true
+  validates :email, uniqueness: true
 end

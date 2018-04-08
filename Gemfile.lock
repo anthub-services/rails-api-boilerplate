@@ -55,12 +55,26 @@ GEM
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
     erubi (1.7.1)
+    fast_jsonapi (1.1.1)
+      activesupport (>= 4.2)
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
     jwt (2.1.0)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -144,7 +158,9 @@ DEPENDENCIES
   byebug
   devise
   dotenv-rails
+  fast_jsonapi
   jwt
+  kaminari
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 3.7)

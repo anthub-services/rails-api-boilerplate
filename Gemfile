@@ -28,6 +28,8 @@ gem 'rack-cors'
 gem 'dotenv-rails'
 gem 'jwt'
 gem 'devise'
+gem 'fast_jsonapi'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
