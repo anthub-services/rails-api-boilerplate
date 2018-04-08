@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: 
+  user_agent: 
+  ip_address: 
+  token: 
+  signed_out: 
+
+two:
+  user: 
+  user_agent: 
+  ip_address: 
+  token: 
+  signed_out: 

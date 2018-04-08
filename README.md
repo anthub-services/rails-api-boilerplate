@@ -117,6 +117,20 @@ To manage separate Docker instance for API, open another terminal console and ru
 - The `start` command works only in local machine
 - Used `./bin/pg/psql <database container ID or Name>` to access the database console
 
+## Users
+
+Use the following credentials to test different API responses. Default password for all accounts is `password`.
+
+| Name              | Email                  | Description |
+|-------------------|------------------------|-------------|
+| Super Admin User  | `superadmin@email.com` | Has wildcard access |
+| Admin User        | `admin@email.com`      | Has wildcard access but `Admin › Users › Delete` is excluded |
+| Common User       | `user@email.com`       | Can access `My Profile`, `Admin › Dashboard`, `Users`, `Users › View, and Settings` |
+| Referrer User     | `referrer@email.com`   | When `redirect` is set without the domain, e.i. `/admin/dashboard`, user shall be redirected to internal page if no location path (referrer) found on the Sign In page |
+| Redirect User     | `redirect@email.com`   | When `redirect` is set with complete URL, e.i. `https://github.com/anthub-services`, user shall be redirected to external page if no location path (referrer) found on the Sign In page |
+| Blocked User      | `blocked@email.com`    | User is signed in but the account is blocked |
+| Unauthorized User | `<any invalid email>`  | Simply enter wrong `email` and/or `password` |
+
 ## Docker Boilerplates
 
 The following boilerplates can be used to install and run the API and client boilerplates in a Docker container.
