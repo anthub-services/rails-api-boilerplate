@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
   skip_before_action :auth_bearer, only: [:authenticate, :sign_out]
 
+  def index
+    render json: Sessions.list(params), status: 200
+  end
+
   def authenticate
     result = Sessions.auth request, params[:token]
 

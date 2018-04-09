@@ -3,7 +3,8 @@ module Users
     FILTER_OPTIONS = {
       table_id: 'user_id',
       date_from: true,
-      date_to: true
+      date_to: true,
+      match: ['first_name', 'last_name']
     }
 
     EMAIL_EXISTS = {

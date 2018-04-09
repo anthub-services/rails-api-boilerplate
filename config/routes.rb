@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'verify-token', to: 'sessions#verify_token', as: 'sessions_verify_token'
 
   resources :users
+  resources :sessions, only: [:index]
 
   root :to => 'index#index'
 end

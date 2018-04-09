@@ -2,6 +2,37 @@ require 'jwt'
 
 module Sessions
   class << self
+    FILTER_OPTIONS = {
+      table_id: 'session_id',
+      date_from: true,
+      date_to: true,
+      match: ['user_agent']
+    }
+
+    def list params
+      sessions = Session.page(params['page']).per(params['limit'])
+      sorted   = params[:sorted] || 'session_id:desc'
+
+      sessions = sessions.order(
+                   ActiveRecordHelper.set_order(
+                     sorted,
+                     FILTER_OPTIONS[:table_id]
+                   )
+                 )
+
+      sessions = sessions.where(
+                   ActiveRecordHelper.set_filter(
+                     params[:filtered],
+                     set_filter_options(params[:filtered])
+                   )
+                 ) if params[:filtered]
+
+      hash     = SessionSerializer.new(sessions).serializable_hash
+      rows     = hash[:data].map do |h| h[:attributes] end
+
+      { pages: sessions.total_pages, rows: rows }
+    end
+
     def auth request, token
       decoded = Sessions.verify_token(token).first
       user = User.find_by(email: decoded['email'])
@@ -42,6 +73,48 @@ module Sessions
         status: 401,
         json: { message: 'Your account is blocked. Please contact the administrator.' }
       }
+
+      def set_filter_options filtered
+        user_where_values = nil
+
+        filtered.split(',').map do |f|
+          array = f.split(':')
+
+          if array[0].eql? 'user'
+            filter_values     = ActiveRecordHelper.decode_value(array[1])
+            user_where_values = ActiveRecordHelper.set_values_tilde filter_values
+            break
+          end
+        end
+
+        filter_options = FILTER_OPTIONS
+
+        if user_where_values.present?
+          user = User.where([set_user_where_fields(user_where_values)].concat user_where_values)
+
+          filter_options[:replace] = {
+            'user': {
+              field: 'user_id',
+              value: user.ids,
+              type: :integer
+            }
+          }
+        end
+
+        filter_options
+      end
+
+      def set_user_where_fields values
+        i = 0
+        where_tilde = []
+
+        while i < values.count
+          where_tilde << "(lower(first_name) || ' ' || lower(last_name)) ~ ?"
+          i += 1
+        end
+
+        where_tilde.join ' AND '
+      end
 
       def auth_response
         if user && user.valid_password?(password)
